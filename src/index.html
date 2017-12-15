@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./scss/index.scss">
+  </head>
+  <body>
+    <main id="app" v-cloak>
+
+      <input v-model.trim="messageText">
+      <button @click="sendMessage">送信</button>
+
+      <ul>
+        <li v-for="message in messages">{{message.text}}</li>
+      </ul>
+
+    </main>
+
+    <script src="./js/index.js"></script>
+  </body>
+</html>
