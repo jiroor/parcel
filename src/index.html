@@ -4,19 +4,39 @@
     <meta charset="utf-8">
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./scss/index.scss">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
   </head>
   <body>
-    <main id="app" v-cloak>
 
-      <input v-model.trim="messageText">
-      <button @click="sendMessage">送信</button>
+    <mdc-layout-app id="app" v-cloak>
+  
+      <mdc-toolbar slot="toolbar">
+        <mdc-toolbar-row>
+          <mdc-toolbar-section align-start="">
+            <mdc-toolbar-title>Title</mdc-toolbar-title>
+          </mdc-toolbar-section>
+        </mdc-toolbar-row>
+      </mdc-toolbar>
+      
+      <main>
+        <mdc-layout-grid>
+          <mdc-layout-cell>
+            <mdc-textfield v-model="messageText" label="Message"></mdc-textfield>
+          </mdc-layout-cell>
+          <mdc-layout-cell>
+            <mdc-button @click="sendMessage" stroked>送信</mdc-button>
+          </mdc-layout-cell>
+        </mdc-layout-grid>
 
-      <ul>
-        <li v-for="message in messages">{{message.text}}</li>
-      </ul>
-
-    </main>
+        <mdc-list>
+          <mdc-list-item v-for="message in messages">{{message.text}}</mdc-list-item>
+        </mdc-list>
+      </main>
+      
+    </mdc-layout-app>
 
     <script src="./js/index.js"></script>
   </body>
