@@ -1,7 +1,9 @@
+import '../scss/index.scss';
+
 import * as firebase from 'firebase';
 import _ from 'lodash';
-import Vue from '../../node_modules/vue/dist/vue.js';
-import Vuefire from '../../node_modules/vuefire/dist/vuefire.js';
+import Vue from 'vue/dist/vue.js';
+import Vuefire from 'vuefire/dist/vuefire.js';
 
 require('firebase/firestore');
 
