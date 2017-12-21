@@ -20,14 +20,20 @@
         </mdc-toolbar-row>
       </mdc-toolbar>
 
-      <main>
+      <main class="content">
         <router-view></router-view>
       </main>
 
     </mdc-layout-app>
 
+    <script id="template-page-home" type="text/x-template">
+      <section>
+        <mdc-display>はじめに</mdc-display>
+      </section>
+    </script>
+
     <script id="template-page-chat" type="text/x-template">
-      <div>
+      <section>
         <mdc-layout-grid>
           <mdc-layout-cell>
             <mdc-textfield v-model="messageText" label="Message"></mdc-textfield>
@@ -40,7 +46,7 @@
         <mdc-list>
           <mdc-list-item v-for="message in messages">{{message.text}}</mdc-list-item>
         </mdc-list>
-      </div>
+      </section>
     </script>
 
     <script src="./js/index.js"></script>

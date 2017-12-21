@@ -29,8 +29,14 @@ const cols = {
 };
 
 const routes = [{
+  path: '/home',
+  component: require('./home.js')(cols)
+}, {
   path: '/chat',
   component: require('./chat.js')(cols)
+}, {
+  path: '*',
+  redirect: '/home'
 }];
 
 const router = new VueRouter({
