@@ -7,16 +7,21 @@
   </head>
   <body>
     <main id="app" v-cloak>
-
-      <input v-model.trim="messageText">
-      <button @click="sendMessage">送信</button>
-
-      <ul>
-        <li v-for="message in messages">{{message.text}}</li>
-      </ul>
-
+      <router-view></router-view>
     </main>
 
+    <script id="template-page-chat" type="text/x-template">
+      <div>
+        <input v-model.trim="messageText">
+        <button @click="sendMessage">送信</button>
+
+        <ul>
+          <li v-for="message in messages">{{message.text}}</li>
+        </ul>
+      </div>
+    </script>
+
     <script src="./js/index.js"></script>
+
   </body>
 </html>
