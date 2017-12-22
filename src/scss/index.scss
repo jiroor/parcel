@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Splatfont';
+  src: url('../font/Splatfont.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Splatfont2';
+  src: url('../font/Splatfont2.ttf') format('truetype');
+}
+
 [v-cloak] {
   display: none;
 }
@@ -9,6 +18,11 @@
   min-width: 250px;
 }
 
-main h1 {
+:global(.mdc-toolbar-title),
+:global(.mdc-typography--display1) {
+  font-family: 'Splatfont';
+}
+
+:global(.mdc-typography--display1) {
   margin-top: 0;
 }

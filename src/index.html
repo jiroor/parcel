@@ -12,7 +12,7 @@
   <body>
     <mdc-layout-app id="app" v-cloak>
 
-      <mdc-toolbar slot="toolbar">
+      <mdc-toolbar slot="toolbar" fixed>
         <mdc-toolbar-row>
           <mdc-toolbar-section align-start="">
             <mdc-toolbar-menu-icon event="toggle-drawer"></mdc-toolbar-menu-icon>
@@ -43,6 +43,8 @@
 
     <script id="template-page-chat" type="text/x-template">
       <section>
+        <mdc-display>チャット</mdc-display>
+
         <mdc-layout-grid>
           <mdc-layout-cell>
             <mdc-textfield v-model="messageText" label="Message"></mdc-textfield>
