@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-module.exports = (cols) => {
+module.exports = (db, cols) => {
   return {
     data() {
       return {

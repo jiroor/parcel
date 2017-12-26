@@ -32,25 +32,25 @@ const cols = {
 
 const routes = [{
   path: '/home',
-  component: require('./home.js')(cols)
+  component: require('./home.js')(db, cols)
 }, {
   path: '/todo',
-  component: require('./todo.js')(cols)
+  component: require('./todo.js')(db, cols)
 }, {
   path: '/event',
-  component: require('./event.js')(cols)
+  component: require('./event.js')(db, cols)
 }, {
   path: '/event/create',
-  component: require('./event__create.js')(cols)
+  component: require('./event__create.js')(db, cols)
 }, {
   path: '/event/auth/:to',
-  component: require('./event__auth.js')(cols)
+  component: require('./event__auth.js')(db, cols)
 }, {
   path: '/event/register/:name',
-  component: require('./event__register.js')(cols)
+  component: require('./event__register.js')(db, cols)
 }, {
   path: '/chat',
-  component: require('./chat.js')(cols)
+  component: require('./chat.js')(db, cols)
 }, {
   path: '*',
   redirect: '/home'
