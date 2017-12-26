@@ -26,6 +26,7 @@ const db = firebase.firestore();
 
 const cols = {
   messages: db.collection('messages'),
+  events: db.collection('events'),
   todos: db.collection('todos')
 };
 
@@ -35,6 +36,18 @@ const routes = [{
 }, {
   path: '/todo',
   component: require('./todo.js')(cols)
+}, {
+  path: '/event',
+  component: require('./event.js')(cols)
+}, {
+  path: '/event/create',
+  component: require('./event__create.js')(cols)
+}, {
+  path: '/event/auth/:to',
+  component: require('./event__auth.js')(cols)
+}, {
+  path: '/event/register/:name',
+  component: require('./event__register.js')(cols)
 }, {
   path: '/chat',
   component: require('./chat.js')(cols)

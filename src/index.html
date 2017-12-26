@@ -27,6 +27,7 @@
           <mdc-drawer-divider></mdc-drawer-divider>
           <mdc-drawer-item to="/chat">Chat</mdc-drawer-item>
           <mdc-drawer-item to="/todo">Todo</mdc-drawer-item>
+          <mdc-drawer-item to="/event">Event</mdc-drawer-item>
         </mdc-drawer-list>
       </mdc-drawer>
 
@@ -100,6 +101,66 @@
           </mdc-layout-cell>
         </mdc-layout-grid>
 
+      </section>
+    </script>
+
+    <script id="template-page-event" type="text/x-template">
+      <section>
+        <mdc-display>イベント</mdc-display>
+
+        <mdc-layout-grid>
+          <mdc-layout-cell desktop=4 tablet=4 phone=4 v-for="event in events">
+            <mdc-card>
+              <mdc-card-header :title="event.title"></mdc-card-header>
+              <mdc-card-text>{{event.text}}</mdc-card-text>
+              <mdc-card-actions>
+                <mdc-card-action-button @click="to(event)">{{event.actionText}}</mdc-card-action-button>
+              </mdc-card-actions>
+            </mdc-card>
+          </mdc-layout-cell>
+        </mdc-layout-grid>
+      </section>
+    </script>
+
+    <script id="template-page-event__create" type="text/x-template">
+      <section>
+        <mdc-display>イベントの作成</mdc-display>
+
+        <mdc-textfield v-model="name" label="イベント名"></mdc-textfield>
+        <mdc-textfield v-model="key" label="マスターキー"></mdc-textfield>
+
+        <mdc-button @click="create" raised :disabled="eventDisabled || isCreating">作成</mdc-button>
+
+        <mdc-linear-progress indeterminate v-show="isCreating"></mdc-linear-progress>
+      </section>
+    </script>
+
+    <script id="template-page-event__auth" type="text/x-template">
+      <section>
+        <mdc-display>イベントの認証</mdc-display>
+
+        <mdc-textfield v-model="name" label="イベント名"></mdc-textfield>
+        <mdc-textfield v-model="key" label="マスターキー"></mdc-textfield>
+
+        <mdc-button @click="auth" raised :disabled="eventDisabled || isAuthing">認証</mdc-button>
+
+        <mdc-linear-progress indeterminate v-show="isAuthing"></mdc-linear-progress>
+      </section>
+    </script>
+
+    <script id="template-page-event__register" type="text/x-template">
+      <section>
+        <mdc-display>データの登録</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header title="CSVから登録"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-textfield v-model="data" label="データ" multiline rows="8" cols="40"></mdc-textfield>
+          </mdc-card-text>
+          <mdc-card-actions>
+            <mdc-card-action-button @click="register()">登録</mdc-card-action-button>
+          </mdc-card-actions>
+        </mdc-card>
       </section>
     </script>
 
