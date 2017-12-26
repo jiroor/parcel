@@ -11,6 +11,10 @@
   display: none;
 }
 
+body {
+  font-family: 'Splatfont2' !important;
+}
+
 :global(.content) {
   margin: 16px auto;
   padding: 80px 16px;
@@ -19,8 +23,16 @@
 }
 
 :global(.mdc-toolbar-title),
-:global(.mdc-typography--display1) {
-  font-family: 'Splatfont';
+:global(.mdc-typography--display1),
+:global(.mdc-typography--headline) {
+  font-family: 'Splatfont' !important;
+}
+
+:global(.mdc-button),
+:global(.mdc-card__title),
+:global(.mdc-card__supporting-text),
+:global(.mdc-form-field) {
+  font-family: 'Splatfont2' !important;
 }
 
 :global(.mdc-typography--display1) {
