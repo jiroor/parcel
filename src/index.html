@@ -26,6 +26,7 @@
           <mdc-drawer-item to="/home">Home</mdc-drawer-item>
           <mdc-drawer-divider></mdc-drawer-divider>
           <mdc-drawer-item to="/chat">Chat</mdc-drawer-item>
+          <mdc-drawer-item to="/todo">Todo</mdc-drawer-item>
         </mdc-drawer-list>
       </mdc-drawer>
 
@@ -57,6 +58,48 @@
         <mdc-list>
           <mdc-list-item v-for="message in messages">{{message.text}}</mdc-list-item>
         </mdc-list>
+      </section>
+    </script>
+
+    <script id="template-page-todo" type="text/x-template">
+      <section>
+        <mdc-display>To-do</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header title="追加する"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-textfield v-model="id" label="項目" fullwidth></mdc-textfield>
+          </mdc-card-text>
+          <mdc-card-actions>
+            <mdc-card-action-button @click="add" raised>追加</mdc-card-action-button>
+          </mdc-card-actions>
+        </mdc-card>
+
+        <mdc-card>
+          <mdc-card-header title="絞り込む"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-switch :label="filter.doing.label" v-model="filter.doing.checked"></mdc-switch>
+            <mdc-switch :label="filter.done.label" v-model="filter.done.checked"></mdc-switch>
+          </mdc-card-text>
+        </mdc-card>
+
+        <mdc-layout-grid>
+          <mdc-layout-cell desktop=4 tablet=4 phone=4 v-for="todo in todos" v-show="(!todo.done && filter.doing.checked) || (todo.done && filter.done.checked)">
+            <mdc-card>
+              <mdc-card-header :title="todo.id"></mdc-card-header>
+              <mdc-card-text>ステータス：{{todo.done ? '終了済み' : '実行中'}}</mdc-card-text>
+              <mdc-card-actions>
+                <mdc-card-action-button @click="done(todo)">{{todo.done ? 'オープン' : '終了'}}</mdc-card-action-button>
+                <mdc-card-action-button @click="remove(todo)">削除</mdc-card-action-button>
+              </mdc-card-actions>
+            </mdc-card>
+
+            <mdc-dialog ref="dialogRemove" title="To-doを削除する" accept="はい" cancel="いいえ" @accept="onAcceptToRemove(todo)" @cancel="onCancelToRemove">
+              To-do「{{todo.id}}」を削除しますか？
+            </mdc-dialog>
+          </mdc-layout-cell>
+        </mdc-layout-grid>
+
       </section>
     </script>
 

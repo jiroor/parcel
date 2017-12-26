@@ -25,12 +25,16 @@ firebase.initializeApp({
 const db = firebase.firestore();
 
 const cols = {
-  messages: db.collection('messages')
+  messages: db.collection('messages'),
+  todos: db.collection('todos')
 };
 
 const routes = [{
   path: '/home',
   component: require('./home.js')(cols)
+}, {
+  path: '/todo',
+  component: require('./todo.js')(cols)
 }, {
   path: '/chat',
   component: require('./chat.js')(cols)
