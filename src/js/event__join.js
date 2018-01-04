@@ -4,6 +4,15 @@ module.exports = (db, cols) => {
   return {
     data() {
       return {
+        registering: false,
+
+        newUser: {
+          name: '',
+          slackId: '',
+          company: '',
+          drunk: false
+        },
+
         filter: {
           name: '',
           slackId: '',
@@ -44,6 +53,21 @@ module.exports = (db, cols) => {
     },
 
     methods: {
+      add() {
+        const colData = cols.events.doc(this.$route.params.name).collection('users');
+
+        colData.doc(this.newUser.name).set({
+          displayable: {
+            'Slack ID': this.newUser.slackId || '-',
+            '企業名': this.newUser.company || '-',
+            '懇親会': this.newUser.drunk ? '参加する' : '参加しない'
+          },
+          joined: true
+        });
+
+        this.$router.push(`/event/complete/${this.$route.params.name}/${this.newUser.name}`);
+      },
+
       join(user) {
         this.$router.push(`/event/confirm/${this.$route.params.name}/${user.id}`);
       },
