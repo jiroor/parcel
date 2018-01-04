@@ -240,6 +240,36 @@
       </section>
     </script>
 
+    <script id="template-page-event__manage" type="text/x-template">
+      <section>
+        <mdc-display>{{$route.params.name}}</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header title="参加者（全体）"></mdc-card-header>
+          <mdc-card-text>
+            <p>予定：{{users.length}}人</p>
+            <p>現在：{{joinedUsers.length}}人</p>
+          </mdc-card-text> 
+        </mdc-card>
+
+        <mdc-card>
+          <mdc-card-header title="参加者（懇親会参加）"></mdc-card-header>
+          <mdc-card-text>
+            <p>予定：{{drunkUsers.length}}人</p>
+            <p>現在：{{drunkJoinedUsers.length}}人</p>
+          </mdc-card-text> 
+        </mdc-card>
+
+        <mdc-card>
+          <mdc-card-header title="お金"></mdc-card-header>
+          <mdc-card-text>
+            <p>予定：{{fee}}円</p>
+            <p>徴収済み：{{currentFee}}円</p>
+          </mdc-card-text> 
+        </mdc-card>
+      </section>
+    </script>
+
     <script src="./js/index.js"></script>
   </body>
 </html>
