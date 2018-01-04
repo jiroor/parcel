@@ -31,7 +31,8 @@ body {
 :global(.mdc-button),
 :global(.mdc-card__title),
 :global(.mdc-card__supporting-text),
-:global(.mdc-form-field) {
+:global(.mdc-form-field),
+:global(.mdc-typography--body1) {
   font-family: 'Splatfont2' !important;
 }
 

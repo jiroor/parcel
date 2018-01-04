@@ -4,7 +4,11 @@ module.exports = (db, cols) => {
   return {
     data() {
       return {
-        name: '',
+        filter: {
+          name: '',
+          slackId: '',
+          company: ''
+        },
 
         users: []
       }
@@ -18,13 +22,24 @@ module.exports = (db, cols) => {
 
     computed: {
       filteredUsers() {
-        if (_.isEmpty(this.name)) {
+        if (_.isEmpty(this.filter.name) && _.isEmpty(this.filter.slackId) && _.isEmpty(this.filter.company)) {
           return [];
         }
 
-        return _.filter(this.users, (user) => {
-          return !user.joined && new RegExp(`.*${this.name}.*`, 'i').test(user.id);
-        });
+        return _.chain(this.users)
+          .filter((user) => {
+            return !user.joined;
+          })
+          .filter((user) => {
+            return _.isEmpty(this.filter.name) || new RegExp(`.*${this.filter.name}.*`, 'i').test(user.id);
+          })
+          .filter((user) => {
+            return _.isEmpty(this.filter.slackId) || new RegExp(`.*${this.filter.slackId}.*`, 'i').test(user.displayable['Slack ID']);
+          })
+          .filter((user) => {
+            return _.isEmpty(this.filter.company) || new RegExp(`.*${this.filter.company}.*`, 'i').test(user.displayable['企業名']);
+          })
+          .value();
       }
     },
 

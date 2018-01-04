@@ -55,7 +55,7 @@ const routes = [{
   path: '/event/confirm/:name/:id',
   component: require('./event__confirm.js')(db, cols)
 }, {
-  path: '/event/complete/:name',
+  path: '/event/complete/:name/:id',
   component: require('./event__complete.js')(db, cols)
 }, {
   path: '/chat',
