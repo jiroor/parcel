@@ -183,12 +183,28 @@
       <section>
         <mdc-display>{{$route.params.name}}</mdc-display>
 
-        <mdc-body>
-          <p>予定参加者数：{{users.length}}人</p>
-          <p>参加者数：{{joinedUsers.length}}人</p>
-          <p>未参加者数：{{users.length}}人</p>
-          <p>予定合計金額：{{fee}}円</p>
-          <p>徴収済み合計金額：{{currentFee}}円</p>
-        </mdc-body>
+        <mdc-card>
+          <mdc-card-header title="参加者（全体）"></mdc-card-header>
+          <mdc-card-text>
+            <p>予定：{{users.length}}人</p>
+            <p>現在：{{joinedUsers.length}}人</p>
+          </mdc-card-text> 
+        </mdc-card>
+
+        <mdc-card>
+          <mdc-card-header title="参加者（懇親会参加）"></mdc-card-header>
+          <mdc-card-text>
+            <p>予定：{{drunkUsers.length}}人</p>
+            <p>現在：{{drunkJoinedUsers.length}}人</p>
+          </mdc-card-text> 
+        </mdc-card>
+
+        <mdc-card>
+          <mdc-card-header title="お金"></mdc-card-header>
+          <mdc-card-text>
+            <p>予定：{{fee}}円</p>
+            <p>徴収済み：{{currentFee}}円</p>
+          </mdc-card-text> 
+        </mdc-card>
       </section>
     </script><script src="aa6a038e2ef3836b14f6230e5eaada60.js"></script></body></html>
