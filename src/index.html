@@ -14,10 +14,12 @@
 
       <mdc-toolbar slot="toolbar" fixed>
         <mdc-toolbar-row>
+          <!--
           <mdc-toolbar-section align-start="">
             <mdc-toolbar-menu-icon event="toggle-drawer"></mdc-toolbar-menu-icon>
             <mdc-toolbar-title>Title</mdc-toolbar-title>
           </mdc-toolbar-section>
+          -->
         </mdc-toolbar-row>
       </mdc-toolbar>
 
@@ -161,6 +163,62 @@
             <mdc-card-action-button @click="register()">登録</mdc-card-action-button>
           </mdc-card-actions>
         </mdc-card>
+
+        <mdc-linear-progress indeterminate v-show="isRegistering"></mdc-linear-progress>
+      </section>
+    </script>
+
+    <script id="template-page-event__join" type="text/x-template">
+      <section>
+        <mdc-display>{{$route.params.name}}へ参加</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header title="名前で検索する"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-textfield v-model="name" label="名前" fullwidth></mdc-textfield>
+          </mdc-card-text>
+        </mdc-card>
+
+        <transition-group tag="mdc-layout-grid" name="demo" appear>
+          <mdc-layout-cell desktop=4 tablet=4 phone=4 v-for="user in filteredUsers" :key="user.id">
+            <mdc-card>
+              <mdc-card-header :title="user.id"></mdc-card-header>
+              <mdc-card-text>
+                <p v-for="(value, key) in user.displayable">{{key}}：{{value}}</p>
+              </mdc-card-text>
+              <mdc-card-actions>
+                <mdc-card-action-button @click="join(user)">参加</mdc-card-action-button>
+              </mdc-card-actions>
+            </mdc-card>
+          </mdc-layout-cell>
+        </transition-group>
+      </section>
+    </script>
+
+    <script id="template-page-event__confirm" type="text/x-template">
+      <section>
+        <mdc-display>{{$route.params.name}}への参加確認</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header :title="$route.params.id"></mdc-card-header>
+          <mdc-card-text>
+            <p v-for="(value, key) in user.displayable">{{key}}：{{value}}</p>
+          </mdc-card-text>
+
+          <mdc-card-actions>
+            <mdc-card-action-button @click="back()">戻る</mdc-card-action-button>
+            <mdc-card-action-button @click="accept()">決定</mdc-card-action-button>
+          </mdc-card-actions>
+        </mdc-card>
+      </section>
+    </script>
+
+    <script id="template-page-event__complete" type="text/x-template">
+      <section>
+        <mdc-display>{{$route.params.name}}への参加完了</mdc-display>
+
+        <p>ご参加ありがとうございます</p>
+        <button>閉じる</button>
       </section>
     </script>
 

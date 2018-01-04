@@ -22,18 +22,21 @@ module.exports = (db, cols) => {
 
     methods: {
       auth() {
-        const event = cols.events
-          .where('name', '==', this.name)
-          .where('key', '==', this.key);
+        const eventDocRef = cols.events.doc(this.name);
 
         this.isAuthing = true;
 
-        event.get()
-          .then((querySnapshot) => {
+        eventDocRef.get()
+          .then((doc) => {
             this.isAuthing = false;
 
-            if (querySnapshot.empty) {
+            if (!doc.exists) {
               console.log('そんなイベントはない');
+              return;
+            }
+
+            if (!_.eq(this.key, doc.data().key)) {
+              console.log('マスターキーが違う');
               return;
             }
 

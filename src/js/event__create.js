@@ -22,22 +22,20 @@ module.exports = (db, cols) => {
 
     methods: {
       create() {
-        const event = cols.events
-          .where('name', '==', this.name);
+        const eventDocRef = cols.events.doc(this.name);
 
         this.isCreating = true;
 
-        event.get()
-          .then((querySnapshot) => {
+        eventDocRef.get()
+          .then((doc) => {
             this.isCreating = false;
 
-            if (!querySnapshot.empty) {
+            if (doc.exists) {
               console.log('すでに存在するイベントです');
               return;
             }
 
-            cols.events.add({
-              name: this.name,
+            eventDocRef.set({
               key: this.key
             });
 

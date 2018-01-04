@@ -4,12 +4,13 @@ module.exports = (db, cols) => {
   return {
     data() {
       return {
-        data: ''
+        data: '',
+
+        isRegistering: false
       }
     },
 
     firestore: {
-      events: cols.events
     },
 
     computed: {
@@ -17,19 +18,29 @@ module.exports = (db, cols) => {
 
     methods: {
       register() {
-        let lines = _.split(this.data, '\n');
-        const keys = _.split(lines.shift(), ',');
-        let data = [];
+        const eventDocRef = cols.events.doc(this.$route.params.name);
+        const colData = eventDocRef.collection('users');
+        const lines = _.split(this.data, '\n');
+        const keys = _.split(lines.shift(), ',').slice(1);
+        const batch = db.batch();
 
         _.each(lines, (line) => {
           const values = _.split(line, ',');
+          const id = values.shift();
 
-          data.push(_.zipObject(keys, values));
+          batch.set(colData.doc(id), {
+            displayable: _.zipObject(keys, values)
+          });
         });
 
-        console.log(data);
+        this.isRegistering = true;
 
-        this.$router.push('/event');
+        batch.commit()
+          .then(() => {
+            this.isRegistering = false;
+
+            this.$router.push('/event');
+          });
       }
     },
 

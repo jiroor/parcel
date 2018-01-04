@@ -38,3 +38,23 @@ body {
 :global(.mdc-typography--display1) {
   margin-top: 0;
 }
+
+:global(.demo-enter-active),
+:global(.demo-leave-active) {
+  transition: transform 0.5s, opacity 0.5s;
+}
+:global(.demo-move):not(:global(.demo-leave-active)) {
+  transition: transform 0.5s;
+}
+/* 表示される時は上からスライド */
+:global(.demo-enter) {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+/* 消える時は縮小される */
+:global(.demo-leave-to) {
+  opacity: 0;
+  transform: scale(0.8);
+}
+:global(.demo-leave-active) {
+}

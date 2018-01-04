@@ -49,6 +49,15 @@ const routes = [{
   path: '/event/register/:name',
   component: require('./event__register.js')(db, cols)
 }, {
+  path: '/event/join/:name',
+  component: require('./event__join.js')(db, cols)
+}, {
+  path: '/event/confirm/:name/:id',
+  component: require('./event__confirm.js')(db, cols)
+}, {
+  path: '/event/complete/:name',
+  component: require('./event__complete.js')(db, cols)
+}, {
   path: '/chat',
   component: require('./chat.js')(db, cols)
 }, {
