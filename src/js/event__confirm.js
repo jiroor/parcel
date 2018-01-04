@@ -34,8 +34,6 @@ module.exports = (db, cols) => {
           joined: true
         });
 
-        console.log('joined');
-
         this.$router.push(`/event/complete/${this.$route.params.name}/${this.$route.params.id}`);
       }
     },
