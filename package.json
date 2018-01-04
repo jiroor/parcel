@@ -5,7 +5,8 @@
   "main": "src/index.html",
   "scripts": {
     "start": "parcel src/index.html",
-    "postinstall": "cd ../../vue/vuefire && npm run build && rsync -avu --delete --exclude='node_modules/' --include='*/' --include='*' . ../../parcel/parcel-test/node_modules/vuefire/"
+    "build": "parcel build src/index.html --out-dir dist --public-url ./ --no-cache",
+    "deploy": "node script/deploy.js"
   },
   "keywords": [],
   "author": "",
@@ -16,10 +17,11 @@
     "vue": "^2.5.11",
     "vue-mdc-adapter": "^0.7.0",
     "vue-router": "^3.0.1",
-    "vuefire": "github:vuejs/vuefire#firestore"
+    "vuefire": "^2.0.0-alpha.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.3",
+    "gh-pages": "^1.1.0",
     "node-sass": "^4.7.2",
     "postcss-modules": "^1.1.0"
   }
