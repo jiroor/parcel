@@ -6,7 +6,8 @@
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --out-dir dist --public-url ./ --no-cache",
-    "deploy": "node script/deploy.js"
+    "deploy": "node script/deploy.js",
+    "production": "npm run build && npm run deploy"
   },
   "keywords": [],
   "author": "",
