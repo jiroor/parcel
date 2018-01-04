@@ -128,9 +128,28 @@
       </section>
     </script><script id="template-page-event__join" type="text/x-template">
       <section>
-        <mdc-display>{{$route.params.name}}へ参加</mdc-display>
+        <mdc-display>
+          {{$route.params.name}}へ参加
 
-        <mdc-card>
+          <mdc-button raised @click="registering = true" v-show="!registering">事前登録していない方はこちら</mdc-button>
+          <mdc-button raised @click="registering = false" v-show="registering">事前登録した方はこちら</mdc-button>
+        </mdc-display>
+
+        <mdc-card v-show="registering">
+          <mdc-card-header title="登録して参加する"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-textfield v-model="newUser.name" label="名前" required helptext-validation></mdc-textfield>
+            <mdc-textfield v-model="newUser.slackId" label="Slack ID"></mdc-textfield>
+            <mdc-textfield v-model="newUser.company" label="企業名"></mdc-textfield>
+            <mdc-switch v-model="newUser.drunk" label="懇親会に参加する"></mdc-switch>
+          </mdc-card-text>
+
+          <mdc-card-actions>
+            <mdc-card-action-button @click="add()">参加</mdc-card-action-button>
+          </mdc-card-actions>
+        </mdc-card>
+
+        <mdc-card v-show="!registering">
           <mdc-card-header title="検索する"></mdc-card-header>
           <mdc-card-text>
             <mdc-textfield v-model="filter.name" label="名前"></mdc-textfield>
