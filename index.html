@@ -179,4 +179,16 @@
         <mdc-body>また、受付横にあります注意事項を一読の上、必要事項を処理ください</mdc-body>
         <mdc-body>全て終わりましたら、こちらの画面は閉じていただいて構いません</mdc-body>
       </section>
+    </script><script id="template-page-event__manage" type="text/x-template">
+      <section>
+        <mdc-display>{{$route.params.name}}</mdc-display>
+
+        <mdc-body>
+          <p>予定参加者数：{{users.length}}人</p>
+          <p>参加者数：{{joinedUsers.length}}人</p>
+          <p>未参加者数：{{users.length}}人</p>
+          <p>予定合計金額：{{fee}}円</p>
+          <p>徴収済み合計金額：{{currentFee}}円</p>
+        </mdc-body>
+      </section>
     </script><script src="aa6a038e2ef3836b14f6230e5eaada60.js"></script></body></html>
