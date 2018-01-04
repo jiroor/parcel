@@ -1,0 +1,164 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title></title><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"><link rel="stylesheet" href="aa6a038e2ef3836b14f6230e5eaada60.css"></head><body><mdc-layout-app id="app" v-cloak=""><mdc-toolbar slot="toolbar" fixed=""><mdc-toolbar-row></mdc-toolbar-row></mdc-toolbar><mdc-drawer slot="drawer" toggle-on="toggle-drawer"><mdc-drawer-list><mdc-drawer-item to="/home">Home</mdc-drawer-item><mdc-drawer-divider></mdc-drawer-divider><mdc-drawer-item to="/chat">Chat</mdc-drawer-item><mdc-drawer-item to="/todo">Todo</mdc-drawer-item><mdc-drawer-item to="/event">Event</mdc-drawer-item></mdc-drawer-list></mdc-drawer><main class="content"><router-view></router-view></main></mdc-layout-app><script id="template-page-home" type="text/x-template">
+      <section>
+        <mdc-display>はじめに</mdc-display>
+      </section>
+    </script><script id="template-page-chat" type="text/x-template">
+      <section>
+        <mdc-display>チャット</mdc-display>
+
+        <mdc-layout-grid>
+          <mdc-layout-cell>
+            <mdc-textfield v-model="messageText" label="Message"></mdc-textfield>
+          </mdc-layout-cell>
+          <mdc-layout-cell>
+            <mdc-button @click="sendMessage" stroked>送信</mdc-button>
+          </mdc-layout-cell>
+        </mdc-layout-grid>
+
+        <mdc-list>
+          <mdc-list-item v-for="message in messages">{{message.text}}</mdc-list-item>
+        </mdc-list>
+      </section>
+    </script><script id="template-page-todo" type="text/x-template">
+      <section>
+        <mdc-display>To-do</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header title="追加する"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-textfield v-model="id" label="項目" fullwidth></mdc-textfield>
+          </mdc-card-text>
+          <mdc-card-actions>
+            <mdc-card-action-button @click="add" raised>追加</mdc-card-action-button>
+          </mdc-card-actions>
+        </mdc-card>
+
+        <mdc-card>
+          <mdc-card-header title="絞り込む"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-switch :label="filter.doing.label" v-model="filter.doing.checked"></mdc-switch>
+            <mdc-switch :label="filter.done.label" v-model="filter.done.checked"></mdc-switch>
+          </mdc-card-text>
+        </mdc-card>
+
+        <mdc-layout-grid>
+          <mdc-layout-cell desktop=4 tablet=4 phone=4 v-for="todo in todos" v-show="(!todo.done && filter.doing.checked) || (todo.done && filter.done.checked)">
+            <mdc-card>
+              <mdc-card-header :title="todo.id"></mdc-card-header>
+              <mdc-card-text>ステータス：{{todo.done ? '終了済み' : '実行中'}}</mdc-card-text>
+              <mdc-card-actions>
+                <mdc-card-action-button @click="done(todo)">{{todo.done ? 'オープン' : '終了'}}</mdc-card-action-button>
+                <mdc-card-action-button @click="remove(todo)">削除</mdc-card-action-button>
+              </mdc-card-actions>
+            </mdc-card>
+
+            <mdc-dialog ref="dialogRemove" title="To-doを削除する" accept="はい" cancel="いいえ" @accept="onAcceptToRemove(todo)" @cancel="onCancelToRemove">
+              To-do「{{todo.id}}」を削除しますか？
+            </mdc-dialog>
+          </mdc-layout-cell>
+        </mdc-layout-grid>
+
+      </section>
+    </script><script id="template-page-event" type="text/x-template">
+      <section>
+        <mdc-display>イベント</mdc-display>
+
+        <mdc-layout-grid>
+          <mdc-layout-cell desktop=4 tablet=4 phone=4 v-for="event in events">
+            <mdc-card>
+              <mdc-card-header :title="event.title"></mdc-card-header>
+              <mdc-card-text>{{event.text}}</mdc-card-text>
+              <mdc-card-actions>
+                <mdc-card-action-button @click="to(event)">{{event.actionText}}</mdc-card-action-button>
+              </mdc-card-actions>
+            </mdc-card>
+          </mdc-layout-cell>
+        </mdc-layout-grid>
+      </section>
+    </script><script id="template-page-event__create" type="text/x-template">
+      <section>
+        <mdc-display>イベントの作成</mdc-display>
+
+        <mdc-textfield v-model="name" label="イベント名"></mdc-textfield>
+        <mdc-textfield v-model="key" label="マスターキー"></mdc-textfield>
+
+        <mdc-button @click="create" raised :disabled="eventDisabled || isCreating">作成</mdc-button>
+
+        <mdc-linear-progress indeterminate v-show="isCreating"></mdc-linear-progress>
+      </section>
+    </script><script id="template-page-event__auth" type="text/x-template">
+      <section>
+        <mdc-display>イベントの認証</mdc-display>
+
+        <mdc-textfield v-model="name" label="イベント名"></mdc-textfield>
+        <mdc-textfield v-model="key" label="マスターキー"></mdc-textfield>
+
+        <mdc-button @click="auth" raised :disabled="eventDisabled || isAuthing">認証</mdc-button>
+
+        <mdc-linear-progress indeterminate v-show="isAuthing"></mdc-linear-progress>
+      </section>
+    </script><script id="template-page-event__register" type="text/x-template">
+      <section>
+        <mdc-display>データの登録</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header title="CSVから登録"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-textfield v-model="data" label="データ" multiline rows="8" cols="40"></mdc-textfield>
+          </mdc-card-text>
+          <mdc-card-actions>
+            <mdc-card-action-button @click="register()">登録</mdc-card-action-button>
+          </mdc-card-actions>
+        </mdc-card>
+
+        <mdc-linear-progress indeterminate v-show="isRegistering"></mdc-linear-progress>
+      </section>
+    </script><script id="template-page-event__join" type="text/x-template">
+      <section>
+        <mdc-display>{{$route.params.name}}へ参加</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header title="名前で検索する"></mdc-card-header>
+          <mdc-card-text>
+            <mdc-textfield v-model="name" label="名前" fullwidth></mdc-textfield>
+          </mdc-card-text>
+        </mdc-card>
+
+        <transition-group tag="mdc-layout-grid" name="demo" appear>
+          <mdc-layout-cell desktop=4 tablet=4 phone=4 v-for="user in filteredUsers" :key="user.id">
+            <mdc-card>
+              <mdc-card-header :title="user.id"></mdc-card-header>
+              <mdc-card-text>
+                <p v-for="(value, key) in user.displayable">{{key}}：{{value}}</p>
+              </mdc-card-text>
+              <mdc-card-actions>
+                <mdc-card-action-button @click="join(user)">参加</mdc-card-action-button>
+              </mdc-card-actions>
+            </mdc-card>
+          </mdc-layout-cell>
+        </transition-group>
+      </section>
+    </script><script id="template-page-event__confirm" type="text/x-template">
+      <section>
+        <mdc-display>{{$route.params.name}}への参加確認</mdc-display>
+
+        <mdc-card>
+          <mdc-card-header :title="$route.params.id"></mdc-card-header>
+          <mdc-card-text>
+            <p v-for="(value, key) in user.displayable">{{key}}：{{value}}</p>
+          </mdc-card-text>
+
+          <mdc-card-actions>
+            <mdc-card-action-button @click="back()">戻る</mdc-card-action-button>
+            <mdc-card-action-button @click="accept()">決定</mdc-card-action-button>
+          </mdc-card-actions>
+        </mdc-card>
+      </section>
+    </script><script id="template-page-event__complete" type="text/x-template">
+      <section>
+        <mdc-display>{{$route.params.name}}への参加完了</mdc-display>
+
+        <p>ご参加ありがとうございます</p>
+        <button>閉じる</button>
+      </section>
+    </script><script src="aa6a038e2ef3836b14f6230e5eaada60.js"></script></body></html>
