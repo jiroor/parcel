@@ -1,4 +1,4 @@
-# parcel-test
+# parcel
 
 parcel+vuejs+firestore test
 
@@ -34,4 +34,4 @@ npm run build
 npm run deploy
 ```
 
-and access to [https://jiroor.github.io/parcel-test](https://jiroor.github.io/parcel-test/)
+and access to [https://jiroor.github.io/parcel](https://jiroor.github.io/parcel/)
